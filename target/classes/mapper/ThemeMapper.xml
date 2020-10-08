@@ -1,0 +1,27 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jbit.mapper.ThemeMapper">
+    
+    <select id="getThemeList" resultType="Theme" parameterType="String">
+		 select * from theme limit ${pageIndex},${PageRows};
+    </select>
+     <select id="getTheme" resultType="Theme" parameterType="int">
+		 select * from theme where id=#{id}
+    </select>
+      <select id="getCount" resultType="Theme" parameterType="int">
+		 select count(1) from theme
+    </select>
+    
+    <insert id="addTheme" parameterType="Theme">
+    INSERT INTO theme (`fileTtle`, `fileDirections`, `fileContent`, `fileAddtime`,`fileUrl`)
+	VALUES (#{fileTtle},  #{fileDirections}, #{fileContent},  #{fileAddtime},#{fileUrl});
+    </insert>
+    
+    <update id="upTheme" parameterType="Leavemag">
+    	UPDATE `theme` SET fileTtle=#{fileTtle},fileDirections=#{fileDirections},fileContent=#{fileContent},
+    	fileUrl=#{fileUrl} WHERE `id` = #{id}
+    </update>
+    
+    <delete id="delTheme" parameterType="int">
+    	delete from theme where id=#{id}
+    </delete>
+</mapper>

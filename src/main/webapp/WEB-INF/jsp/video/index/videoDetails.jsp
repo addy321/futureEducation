@@ -1,4 +1,8 @@
 <%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %><%--核心标签--%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %><%--格式化标签--%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %><%--函数标签--%>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -51,11 +55,11 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">在线播放</a>
+                <a class="navbar-brand" href="#">视频教学</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="/user/index">首页</a></li>
+                    <li><a href="/user/index">首页</a></li>
                     <li><a href="/user/videoListView">视频播放专区</a></li>
                 </ul>
             </div>
@@ -67,12 +71,13 @@
 
         <!-- Main component for a primary marketing message or call to action -->
         <div class="jumbotron">
-            <h1>某某某视频</h1>
-            <p>某某某大概说明</p>
-            <p>某某某详细描述</p>
+            <h1>${video.videoTitle }</h1>
+            <p>${video.videoManual }</p>
+            <p>${video.videocontent }</p>
             <noscript>
                 <strong>We're sorry but soucecode doesn't work properly without JavaScript enabled. Please enable it to
-                    continue.</strong>
+                    continue. 
+                </strong>
             </noscript>
             <div id="videoContainer"></div>
         </div>
@@ -80,7 +85,7 @@
 
     </div> <!-- /container -->
 
-
+<input type = 'hidden' id ='videoUrl' name = 'value' value = '${video.videoUrl}'></input>
     <!-- 视频播放插件 -->
     <script type="text/javascript" src="http://v.bootstrapmb.com/2020/7/ti6i78438/superVideo.js"></script>
 </body>
@@ -97,7 +102,7 @@
     const fullScreenControl = new Super.FullScreenControl() // 实例化“全屏”控件
     const video = new Super.Svideo('videoContainer', {
         source: new Super.VideoSource({ // 引入视频资源
-            src: 'https://blz-videos.nosdn.127.net/1/OverWatch/AnimatedShots/Overwatch_AnimatedShot_Winston_Recall.mp4'
+            src: $('#videoUrl').val()
         }),
         leftControls: [nextControl], // 控件栏左槽插入控件
         rightControls: [Dbspeen, fullScreenControl], // 控件栏右槽插入控件

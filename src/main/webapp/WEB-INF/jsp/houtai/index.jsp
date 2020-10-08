@@ -68,6 +68,7 @@
           <li><a href="/admin/tikuView">题库管理</a></li>
           <li><a href="/admin/zhaopingView">招聘信息管理</a></li>
           <li><a href="/admin/shenheView">留言审核</a></li>
+          <li><a href="/admin/baomingView">报名管理</a></li>
         </ul>
       </div>
       <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">

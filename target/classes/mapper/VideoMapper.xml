@@ -1,16 +1,27 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jbit.mapper.VideoMapper">
      <insert id="addVideo" parameterType="Video">
-		 insert into video (`videoTitle`,`videoManual`,`videocontent`,`videoUrl`,`videoImgUrl`,`videoAddTime`,`videoStatus`,`VideoType`)
-values (#{videoTitle},#{videoManual},#{videocontent},#{videoUrl},#{videoImgUrl},#{videoAddTime},#{videoStatus},#{VideoType});
+		 insert into video (`videoTitle`,`videoManual`,`videocontent`,`videoUrl`,`videoImgUrl`,`videoAddTime`,`videoStatus`,`videoType`)
+values (#{videoTitle},#{videoManual},#{videocontent},#{videoUrl},#{videoImgUrl},#{videoAddTime},#{videoStatus},#{videoType});
     </insert>
     
-    <select id="getTheVideo" resultType="Video" parameterType="String">
+    <select id="getTheVideo" resultType="Video" parameterType="Integer">
 		 select * from video where id=#{id}
     </select>
     
     <select id="getListViode" resultType="Video">
-		 select * from video limit ${pageIndex},${PageRows};
+		 select * from video 
+		 <if test="videoType>0">
+		 	where videoType = #{videoType}
+		 </if>
+		  limit ${pageIndex},${PageRows};
+    </select>
+    
+     <select id="getVideoCount" resultType="int">
+		 select count(1) from video
+		 <if test="videoType>0">
+		 	where videoType = #{videoType}
+		 </if>
     </select>
     
     <delete id="delVideo" parameterType="int">
@@ -18,15 +29,14 @@ values (#{videoTitle},#{videoManual},#{videocontent},#{videoUrl},#{videoImgUrl},
     </delete>
     
     <update id="upVideo" parameterType="Video">
-    	UPDATE `futrreteacher`.`video`
+    	UPDATE `video`
 		SET `videoTitle` = #{videoTitle},
 		  `videoManual` = #{videoManual},
 		  `videocontent` = #{videocontent},
 		  `videoUrl` = #{videoUrl},
 		  `videoImgUrl` = #{videoImgUrl},
-		  `videoAddTime` = #{videoAddTime},
 		  `videoStatus` = #{videoStatus},
-		  `VideoType` = #{VideoType}
+		  `videoType` = #{videoType}
 		WHERE `id` = #{id};
     </update>
     

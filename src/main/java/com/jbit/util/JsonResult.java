@@ -45,6 +45,9 @@ public class JsonResult implements Serializable {
    public static JsonResult error() {
        return new JsonResult(1,"请求失败",null);
    }
+   public static JsonResult error(String message) {
+       return new JsonResult(1,message,null);
+   }
 
 
    /**

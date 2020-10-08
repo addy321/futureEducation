@@ -1,0 +1,42 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jbit.mapper.ApplyMapper">
+    
+    <select id="getRecruitments" resultType="Apply" parameterType="String">
+		 select * from apply
+		  limit ${pageIndex},${PageRows};
+    </select>
+    <select id="getCount" resultType="int">
+		 select count(1) from apply
+    </select>
+     <select id="getRecruitment" resultType="Apply" parameterType="int">
+		 select * from apply where id=#{id}
+    </select>
+     <select id="getApplyList" parameterType="String" resultMap="queryForListMap">
+	SELECT A.*,B.addTime as Baddtime , B.id as bid,B.title,B.labelText,B.wageText FROM apply A INNER JOIN recruitment B on A.recruitmentId=B.id where A.userName=#{userName}
+    </select>
+    
+     <resultMap id="queryForListMap" type="Apply">
+        <result column="addTime" property="addTime"/>
+        <collection property="recruitment" javaType="Recruitment">
+            <result column="title" property="title" />
+            <result column="labelText" property="labelText" />
+            <result column="wageText" property="wageText" />
+            <result column="bid" property="id" />
+            <result column="Baddtime" property="addTime" />
+        </collection>
+    </resultMap>
+    
+    <insert id="addRecruitment" parameterType="Apply">
+    INSERT INTO apply (`userName`, `nickname`, `recruitmentId`, `recruitmentName`,`addTime`)
+	VALUES (#{userName},  #{nickname}, #{recruitmentId},  #{recruitmentName},#{addTime});
+    </insert>
+    
+    <update id="upRecruitment" parameterType="Leavemag">
+    	UPDATE `apply` SET userName=#{userName},nickname=#{nickname},recruitmentId=#{recruitmentId},recruitmentName=#{recruitmentName}
+    	 WHERE `id` = #{id}
+    </update>
+    
+    <delete id="delRecruitment" parameterType="int">
+    	delete from apply where id=#{id}
+    </delete>
+</mapper>

@@ -1,7 +1,6 @@
 package com.jbit.util;
 
 import java.io.Serializable;
-import java.util.Date;
 
 public class Ajax implements Serializable {
 	/**

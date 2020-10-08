@@ -25,25 +25,25 @@
                             <li class="active login_left">密码登录</li>
                             <li class="login_right">账号登录</li>
                         </ul>
-                        <span style="color: red;font-size: 12px;">${loginMessage}</span>
+                        <span style="color: red;font-size: 12px;" id="loginMessage">${loginMessage}</span>
                         <ul id="card">
                             <li class="active">
-                              <form action="/user/Login" method="POST">
+                              <form>
 	                                <!--输入框-->
 	                                <div class="login_bot_count">
 	                                    <img src="/static/denglu/img/tubiao-07.png" alt="" />
-	                                    <input type="" name="userName" id="" placeholder="请输入账号" id="one" />
+	                                    <input type="" name="userName" id="userName" placeholder="请输入账号" id="one" />
 	                                </div>
 	                                <div class="login_bot_count">
 	                                    <img src="/static/denglu/img/tubiao-06.png" alt="" />
-	                                    <input type="password" name="password" id="" placeholder="请输入密码" id="one" />
+	                                    <input type="password" name="password" id="password" placeholder="请输入密码" id="one" />
 	                                </div>
 	                                <div class="login_bot">
 	                                    <a>忘记密码?</a>
 	                                    <p><input type="checkbox" name="vehicle" value="Bike" />记住密码</p>
 	                                </div>
 	                                <!--登录按钮-->
-	                                <button class="login_button" type="submit">登录</button>
+	                                <button class="login_button" type="button" onclick="login()">登录</button>
                                 </form>
                             </li>
                             <li class="login_account">
@@ -92,6 +92,37 @@
 
     <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
     <script type="text/javascript" src="/static/denglu/login.js"></script>
+    <script>
+    function login(){
+    	var userName =  $("#userName").val().trim();
+    	var password =  $("#password").val().trim();
+    	if(userName == "" || password == ""){
+    		return
+    	}
+    	$.ajax({
+            type: 'post',
+            url: "/user/Login",
+            data: {userName:userName,password:password},
+            datatype: 'json',
+            success: function (res) {
+            	if(res.code == 0){
+            		if(res.data == "Admin"){
+            			window.location.href="/admin/index"
+            		}else{
+            			window.location.href="/user/index"
+            		}
+            	}else{
+            		$("#loginMessage").text(res.msg)
+            	}
+            	console.log(res)
+            }, error:function(err){
+            	console.log(err)
+                alert("请求异常")
+            }
+        })
+    }
+    
+    </script>
 </body>
 
 </html>

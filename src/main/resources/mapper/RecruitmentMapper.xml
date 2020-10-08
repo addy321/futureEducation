@@ -1,0 +1,27 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jbit.mapper.RecruitmentMapper">
+    
+    <select id="getRecruitments" resultType="Recruitment" parameterType="String">
+		 select * from recruitment
+		  limit ${pageIndex},${PageRows};
+    </select>
+     <select id="getRecruitment" resultType="Recruitment" parameterType="int">
+		 select * from recruitment where id=#{id}
+    </select>
+    
+    <select id="getCount" resultType="int">
+		 select count(1) from recruitment
+    </select>
+    <insert id="addRecruitment" parameterType="Recruitment">
+    INSERT INTO recruitment (`title`, `wageText`, `labelText`, `addTime`)
+	VALUES (#{title},  #{wageText}, #{labelText},  #{addTime});
+    </insert>
+    
+    <update id="upRecruitment" parameterType="Leavemag">
+    	UPDATE `recruitment` SET title=#{title},wageText=#{wageText},labelText=#{labelText} WHERE `id` = #{id}
+    </update>
+    
+    <delete id="delRecruitment" parameterType="int">
+    	delete from recruitment where id=#{id}
+    </delete>
+</mapper>

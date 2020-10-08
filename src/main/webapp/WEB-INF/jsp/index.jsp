@@ -1,4 +1,7 @@
 <%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %><%--核心标签--%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %><%--格式化标签--%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %><%--函数标签--%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,10 +40,10 @@
           </button>
           <a class="navbar-brand" href="/user/index">首页</a>
           <a class="navbar-brand" href="/user/videoListView">视频</a>
-          <a class="navbar-brand" href="/user/index">题库</a>
-          <a class="navbar-brand" href="/user/index">招聘</a>
-          <a class="navbar-brand" href="/user/index">报名</a>
-          <a class="navbar-brand" href="/user/index">留言</a>
+          <a class="navbar-brand" href="/user/themeView">题库</a>
+          <a class="navbar-brand" href="/user/zhaoPingView">招聘</a>
+          <a class="navbar-brand" href="/user/liuyanView">留言</a>
+          <a class="navbar-brand" href="/user/applyView">我的报名</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
            <form class="navbar-form navbar-right">
@@ -58,11 +61,9 @@
         <p>未来教师网为考生精心打造一款适用于参加教师资格证、教师招聘考试的备考学习网站。该网站提供教师资格证笔试面试、
             教师招聘考试笔试面试、报名及公告资讯查询，题库练习、直播辅导课程、面试实战点评、错题纠错。它的出现不仅可以方便
             备考学生查阅资料、报名信息等，还能为备考生提供交流的平台</p>
-        <p><a class="btn btn-primary btn-lg" href="#" role="button"> 在线报名 &raquo;</a></p>
+        <p><a class="btn btn-primary btn-lg" href="/user/zhaoPingView" role="button"> 在线报名 &raquo;</a></p>
       </div>
     </div>
-
-    
 
     <div class="container">
         <div class="carousel slide" id="carousel-example-generic" data-ride="carousel" data-interval="1500" style="margin-bottom: 50px;">
@@ -144,60 +145,17 @@
       <h3><a href="/user/videoListView">视频教学专区</a></h3>
       <div class="bs-example" data-example-id="thumbnails-with-custom-content">
         <div class="row">
+          <c:forEach var="video" items="${videos}">
           <div class="col-sm-6 col-md-4">
             <div class="thumbnail">
-              <img data-src="holder.js/100%x200" alt="100%x200" src="https://www.17sucai.com/preview/855854/2019-06-19/xueyuan/images/index15.jpg" data-holder-rendered="true" style="height: 200px; width: 100%; display: block;">
+              <img data-src="holder.js/100%x200" alt="100%x200" src="${video.videoImgUrl}" data-holder-rendered="true" style="height: 200px; width: 100%; display: block;">
               <div class="caption">
-                 <h3><a href="/user/videoView">视频教学 </a></h3>
-                <p>网上在线教学成就未来美好优秀的你</p>
+                 <h3><a href="/user/videoView">${video.videoTitle } </a></h3>
+                <p>${video.videoManual }</p>
               </div>
             </div>
           </div>
-          <div class="col-sm-6 col-md-4">
-            <div class="thumbnail">
-              <img data-src="holder.js/100%x200" alt="100%x200" src="https://www.17sucai.com/preview/855854/2019-06-19/xueyuan/images/index14.jpg" data-holder-rendered="true" style="height: 200px; width: 100%; display: block;">
-              <div class="caption">
-                 <h3><a href="/user/videoView">视频教学 </a></h3>
-                <p>网上在线教学成就未来美好优秀的你</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-6 col-md-4">
-            <div class="thumbnail">
-              <img data-src="holder.js/100%x200" alt="100%x200" src="https://www.17sucai.com/preview/855854/2019-06-19/xueyuan/images/index16.jpg" data-holder-rendered="true" style="height: 200px; width: 100%; display: block;">
-              <div class="caption">
-                <h3><a href="/user/videoView">视频教学 </a></h3>
-                <p>网上在线教学成就未来美好优秀的你</p>
-              </div>
-            </div>
-          </div>
-               <div class="col-sm-6 col-md-4">
-            <div class="thumbnail">
-              <img data-src="holder.js/100%x200" alt="100%x200" src="https://www.17sucai.com/preview/855854/2019-06-19/xueyuan/images/index16.jpg" data-holder-rendered="true" style="height: 200px; width: 100%; display: block;">
-              <div class="caption">
-                <h3><a href="/user/videoView">视频教学 </a></h3>
-                <p>网上在线教学成就未来美好优秀的你</p>
-              </div>
-            </div>
-          </div>
-               <div class="col-sm-6 col-md-4">
-            <div class="thumbnail">
-              <img data-src="holder.js/100%x200" alt="100%x200" src="https://www.17sucai.com/preview/855854/2019-06-19/xueyuan/images/index16.jpg" data-holder-rendered="true" style="height: 200px; width: 100%; display: block;">
-              <div class="caption">
-                <h3><a href="/user/videoView">视频教学 </a></h3>
-                <p>网上在线教学成就未来美好优秀的你</p>
-              </div>
-            </div>
-          </div>
-               <div class="col-sm-6 col-md-4">
-            <div class="thumbnail">
-              <img data-src="holder.js/100%x200" alt="100%x200" src="https://www.17sucai.com/preview/855854/2019-06-19/xueyuan/images/index16.jpg" data-holder-rendered="true" style="height: 200px; width: 100%; display: block;">
-              <div class="caption">
-                <h3><a href="/user/videoView">视频教学 </a></h3>
-                <p>网上在线教学成就未来美好优秀的你</p>
-              </div>
-            </div>
-          </div>
+          </c:forEach>
         </div>
       </div>
 

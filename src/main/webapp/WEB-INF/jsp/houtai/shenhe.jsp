@@ -1,4 +1,8 @@
 <%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %><%--核心标签--%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %><%--格式化标签--%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %><%--函数标签--%>
 <!DOCTYPE html>
 <html lang="zh-CN">
 
@@ -65,13 +69,14 @@
 		           <li><a href="/admin/tikuView">题库管理</a></li>
 		           <li><a href="/admin/zhaopingView">招聘信息管理</a></li>
 		           <li class="active"><a href="#">留言审核</a></li>
+		           <li><a href="/admin/baomingView">报名管理</a></li>
                 </ul>
             </div>
             <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
                 <h1 class="page-header">留言审核</h1>
 
                 <div class="row placeholders">
-                    <form class="navbar-form navbar-left">
+                 <!--    <form class="navbar-form navbar-left">
                         <div class="form-group">
                             <input type="text" class="form-control" placeholder="Search">
                         </div>
@@ -82,64 +87,56 @@
                             <input type="text" class="form-control" placeholder="Search">
                         </div>
                         <button type="submit" class="btn btn-default">查询</button>
-                    </form>
+                    </form> -->
                 </div>
-
                 <div class="table-responsive">
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th>#</th>
-                                <th>Header</th>
-                                <th>Header</th>
-                                <th>Header</th>
-                                <th>Header</th>
+                                <th>id</th>
+                                <th>用户名</th>
+                                <th>添加时间</th>
+                                <th>状态</th>
+                                <th>内容</th>
+                                <th>昵称</th>
                             </tr>
                         </thead>
                         <tbody>
+                       	 <c:forEach var="Leavemag" items="${leavemags}">
                             <tr>
-                                <td>1,001</td>
-                                <td>Lorem</td>
-                                <td>ipsum</td>
-                                <td>dolor</td>
-                                <td>sit</td>
-                                <td><span class="label label-danger">删除</span>
-                                    <span class="label label-default">修改</span>
+                                <td>${Leavemag.id }</td>
+                                <td>${Leavemag.userName }</td>
+                                <td>${Leavemag.addTime }</td>
+                                <td>
+                                	<c:out value="${Leavemag.status==1 ? '未通过审核': '通过审核'}"/>
+                                </td>
+                                <td>${Leavemag.content }</td>
+                                <td>${Leavemag.nickname }</td>
+                                <td>
+                               		<button type="button" class="btn-primary" id="${Leavemag.id}" onclick="delLeavemag(this)">
+							      	删除
+								    </button>
+								    <button type="button" class="btn-primary" id="${Leavemag.id}" onclick="tongguoLeavemag(this)">
+								      	通过
+								    </button>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>1,002</td>
-                                <td>amet</td>
-                                <td>consectetur</td>
-                                <td>adipiscing</td>
-                                <td>elit</td>
-                                <td><span class="label label-danger">删除</span>
-                                    <span class="label label-default">修改</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>1,003</td>
-                                <td>Integer</td>
-                                <td>nec</td>
-                                <td>odio</td>
-                                <td>Praesent</td>
-                                <td><span class="label label-danger">删除</span>
-                                    <span class="label label-default">修改</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>1,003</td>
-                                <td>libero</td>
-                                <td>Sed</td>
-                                <td>cursus</td>
-                                <td>ante</td>
-                                <td><span class="label label-danger">删除</span>
-                                    <span class="label label-default">修改</span>
-                                </td>
-                            </tr>
+                          </c:forEach>
                         </tbody>
                     </table>
                 </div>
+                <nav aria-label="...">
+			      <ul class="pagination" style="float: right;">
+			        <c:forEach begin="1" end="${totalPages}" varStatus="loop">
+	                    <c:set var="active" value="${loop.index==pageIndex?'active':''}"/>
+	                    <li class="${active}"><a
+	                            href="<c:url value="/admin/videoView?pageIndex=${loop.index}&PageRows=${PageRows}"/>">${loop.index}</a>
+	                    </li>
+	                </c:forEach>
+	                <c:set var="hidden" value="${totalPages<=1?'':'display: none;'}"/>
+	                <li style="${hidden}"><a href='/admin/videoView?pageIndex=1&PageRows=10'>1</a></li>
+			     </ul>
+			   </nav>
             </div>
         </div>
     </div>
@@ -150,7 +147,51 @@
     <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
     <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
+	<script>
+		function delLeavemag(obj){
+	    	var flag = confirm("确定删除吗?");
+	    	if(flag){
+	    		$.ajax({
+	    	        type: 'get',
+	    	        url: "/admin/delLeavemag",
+	    	        data: {id:$(obj).attr("id")},
+	    	        datatype: 'json',
+	    	        success: function (res) {
+	    	        	if(res.code==0){
+	    	        		window.location.href="/admin/shenheView"
+	    	        	}else{
+	    	        		alert(res.mag)
+	    	        	}
+	    	        }, error:function(err){
+	    	        	console.log(err)
+	    	            alert("请求异常")
+	    	        }
+	    	    })
+	    	}
+	    }
+		
+		function tongguoLeavemag(obj){
+	    	var flag = confirm("确定通过吗?");
+	    	if(flag){
+	    		$.ajax({
+	    	        type: 'get',
+	    	        url: "/admin/upLeavemag",
+	    	        data: {id:$(obj).attr("id")},
+	    	        datatype: 'json',
+	    	        success: function (res) {
+	    	        	if(res.code==0){
+	    	        		window.location.href="/admin/shenheView"
+	    	        	}else{
+	    	        		alert(res.mag)
+	    	        	}
+	    	        }, error:function(err){
+	    	        	console.log(err)
+	    	            alert("请求异常")
+	    	        }
+	    	    })
+	    	}
+	    }
+	</script>
 </body>
 
 </html>

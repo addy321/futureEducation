@@ -13,7 +13,9 @@ public interface VideoService {
 	//修改视频
 	int upVideo(Video video);
 	//查询视频列表
-	List<Video> getListViode(int pageIndex,int PageRows);
+	List<Video> getListViode(int pageIndex,int PageRows,int videoType);
 	//查询单个视频
 	Video getTheVideo(int id);
+	//查询数量
+	int getVideoCount(int videoType);
 }

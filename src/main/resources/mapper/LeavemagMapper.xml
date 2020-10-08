@@ -1,0 +1,31 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jbit.mapper.LeavemagMapper">
+    
+    <select id="getLeavemags" resultType="Leavemag" parameterType="String">
+		 select * from leavemag
+		 <if test="status != 0">
+		 	where status = #{status}
+		 </if>
+		  limit ${pageIndex},${PageRows};
+    </select>
+     <select id="getCount" resultType="int" parameterType="int">
+		 select count(1) from leavemag
+		 <if test="status != 0">
+		 	where status = #{status}
+		 </if>
+    </select>
+    
+    
+    <insert id="addLeavemag" parameterType="Leavemag">
+    INSERT INTO leavemag (`userName`, `addTime`, `status`, `content`,`nickname`)
+	VALUES (#{userName},  #{addTime}, #{status},  #{content}, #{nickname});
+    </insert>
+    
+    <update id="upLeavemag" parameterType="Leavemag">
+    	UPDATE `leavemag` SET status=2 WHERE `id` = #{id}
+    </update>
+    
+    <delete id="delLeavemag" parameterType="int">
+    	delete from leavemag where id=#{id}
+    </delete>
+</mapper>

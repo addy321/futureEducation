@@ -33,15 +33,21 @@ public class VideoServiceImpl implements VideoService {
 	}
 
 	@Override
-	public List<Video> getListViode(int pageIndex, int PageRows) {
+	public List<Video> getListViode(int pageIndex, int PageRows,int videoType) {
 		// TODO Auto-generated method stub
-		return videoDao.getListViode(pageIndex, PageRows);
+		return videoDao.getListViode(pageIndex, PageRows,videoType);
 	}
 
 	@Override
 	public Video getTheVideo(int id) {
 		// TODO Auto-generated method stub
 		return videoDao.getTheVideo(id);
+	}
+
+	@Override
+	public int getVideoCount(int videoType) {
+		// TODO Auto-generated method stub
+		return videoDao.getVideoCount(videoType);
 	}
 
 }

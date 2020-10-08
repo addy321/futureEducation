@@ -1,5 +1,6 @@
 package com.jbit.entity;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Video {
@@ -48,8 +49,9 @@ public class Video {
 	public void setVideoImgUrl(String videoImgUrl) {
 		this.videoImgUrl = videoImgUrl;
 	}
-	public Date getVideoAddTime() {
-		return videoAddTime;
+	public String getVideoAddTime() {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		return sdf.format(videoAddTime);
 	}
 	public void setVideoAddTime(Date videoAddTime) {
 		this.videoAddTime = videoAddTime;

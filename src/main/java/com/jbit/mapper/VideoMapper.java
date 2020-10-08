@@ -16,7 +16,9 @@ public interface VideoMapper {
 	//修改视频
 	int upVideo(Video video);
 	//查询视频列表
-	List<Video> getListViode(@Param("pageIndex")int pageIndex,@Param("PageRows")int PageRows);
+	List<Video> getListViode(@Param("pageIndex")int pageIndex,@Param("PageRows")int PageRows,@Param("videoType")int videoType);
 	//查询单个视频
 	Video getTheVideo(@Param("id")int id);
+	// 查询数量
+	int getVideoCount(@Param("videoType")int videoType);
 }
